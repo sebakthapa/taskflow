@@ -18,10 +18,21 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+
+.cyan_gradient {
+  background: linear-gradient(100deg, rgb(2, 181, 181) 0 10%, rgb(2, 192, 122) 90% 100%);
+}
+
+.cyan_gradient._hover {
+  transition: .3s ease;
+}
+
+.cyan_gradient._hover:hover {
+
+  background: linear-gradient(150deg, rgb(0, 196, 196) 0 10%, rgb(0, 205, 130) 90% 100%);
 }
