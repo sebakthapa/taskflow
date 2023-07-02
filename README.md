@@ -1,34 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Taskflow - Beta Version
 
-## Getting Started
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-First, run the development server:
+Taskflow is a web application designed to help you track your daily and weekly goals, monitor your calorie consumption, manage your workout routine, record your daily activities, and analyze the calories you burn. Additionally, it allows you to track your expenses and effectively manage your budget. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+The application also provides a team feature, allowing users to form teams with other individuals who share the same budget. This enables you to divide expenses among team members and collaboratively manage your finances. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Features
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Goal Tracking:** Easily set and manage your daily and weekly goals.
+- **Calorie Consumption:** Track the number of calories you consume each day to maintain a healthy lifestyle.
+- **Workout Routine:** Maintain a structured workout routine by logging your workouts and exercises.
+- **Daily Activity Tracking:** Record your daily activities to calculate the calories burned.
+- **Expense Management:** Keep track of your expenses and effectively manage your budget.
+- **Team Collaboration:** Create teams with other users sharing the same budget to collaboratively manage expenses.
+- **Email and SMS Notifications:** Receive notifications and reminders related to your goals, budget, and team activities.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+1. Clone the repository:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/sebakthapa/taskflow.git
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Install the required dependencies:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```bash
+   cd taskflow
+   yarn install 
+   ```
 
-## Deploy on Vercel
+3. Configure the application by updating the necessary settings, such as API keys for email and SMS notifications. We have used novu as notification infrastructure.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Start the server:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ```bash 
+   yarn dev
+   ```
+5. Access the application by navigating to http://localhost:3000 or the port shown in your terminal through your web browser.
+
+
+
+
