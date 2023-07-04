@@ -1,14 +1,20 @@
 import Image from 'next/image'
 import Darkmode from "darkmode-js"
+import { useRouter } from 'next/navigation'
+import Link from 'next/link';
 
 export default function Home() {
-
+  // const router = useRouter();
 
   return (
-    <div className='p-10'>
-      <h1>TASKFLOW</h1>
-      <Image src="/taskflow-logo.png" width={100} height={50} />
-      <button className='cyan_gradient _hover capitalize rounded py-3 px-5 text-gray-200 font-semibold'> Submit </button>
+    <div className='flex flex-col gap-10 p-10'>
+      <Link href="/auth/signup" > SIGNUP</Link>
+      <Link href="/auth/signin" > signin</Link>
+      <Link href="/auth/verify_email" > verify email</Link>
+      <Link href="/auth/dashboard" >dashboard </Link>
+
+
+
     </div>
   )
 }

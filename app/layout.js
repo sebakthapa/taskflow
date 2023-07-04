@@ -2,7 +2,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google';
 import Darkmode from "darkmode-js"
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -34,8 +34,29 @@ const addDarkmodeWidget = () => {
 
 
 export default function RootLayout({ children }) {
+  // const [preferredScheme, setPreferredScheme] = useState("");
+
+  const handleDarkMode = () => {
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+
+    // // Whenever the user explicitly chooses light mode
+    // localStorage.theme = 'light'
+
+    // // Whenever the user explicitly chooses dark mode
+    // localStorage.theme = 'dark'
+
+    // // Whenever the user explicitly chooses to respect the OS preference
+    // localStorage.removeItem('theme')
+  }
+
+
   useEffect(() => {
-    addDarkmodeWidget();
+    // addDarkmodeWidget();
+    // handleDarkMode();
   }, [])
 
   return (

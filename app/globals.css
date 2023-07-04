@@ -6,33 +6,114 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
+ 
+
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+ @media (prefers-color-scheme: dark) {
+ /* :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+
+    --palatte-900: #101034;
+  --palatte-800: #1b1f4a;
+  --palatte-700: #222756;
+  --palatte-600: #292f61;
+  --palatte-500:  #2e3668;
+  --palatte-400: #4a517b;
+  --palatte-300: #676d90;
+  --palatte-200: #9095af;
+  --palatte-100: #bbbed0;
+  --palatte-500: #e4e5eb;
   }
-}
+  */
+
+  
+} 
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  background-color: hsla(0, 0%, 94%, 1);
+  background-image:
+    radial-gradient(at 53% 85%, hsla(264, 100%, 46%, .1) 0px, transparent 50%),
+    radial-gradient(at 17% 45%, hsla(258, 100%, 35%, .1) 0px, transparent 50%),
+    radial-gradient(at 66% 20%, hsla(174, 97%, 43%, .1) 0px, transparent 50%),
+    radial-gradient(at 95% 58%, hsla(179, 98%, 26%, .1) 0px, transparent 50%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 500vh;
+  /* background: #111; */
+
+  
+
+  --palatte-900: #0000d6;
+  --palatte-800: #1c00db;
+  --palatte-700: #3d00e0;
+  --palatte-600: #5300e8;
+  --palatte-500: #6002ee;
+  --palatte-400: #7e3ff2;
+  --palatte-300: #9965f4;
+  --palatte-200: #b794f6;
+  --palatte-100: #d4bff9;
+  --palatte-500: #efe5fd;
+}
+
+body.darkmode-activated{
+
 }
 
 
-.cyan_gradient {
-  background: linear-gradient(100deg, rgb(2, 181, 181) 0 10%, rgb(2, 192, 122) 90% 100%);
+/* floating input label */
+
+.input-field-container {
+  position: relative;
 }
 
-.cyan_gradient._hover {
-  transition: .3s ease;
+.input-field-container>div {
+  position: relative;
+  height: auto;
+  width: auto;
 }
 
-.cyan_gradient._hover:hover {
+.input-field-container>div label {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  z-index: 1111;
+  pointer-events: none;
+  transition: .2s ease-in-out;
 
-  background: linear-gradient(150deg, rgb(0, 196, 196) 0 10%, rgb(0, 205, 130) 90% 100%);
 }
+
+.input-field-container input {
+  @apply bg-transparent rounded outline-none border-gray-300 border-solid border-2 focus:border-gray-400 hover:border-gray-400;
+}
+.input-field-container label {
+  @apply bg_blur bg-[rgba(230,230,250,.2)] ;
+}
+
+.input-field-container input:focus~label,
+.input-field-container input:valid~label {
+  top: 0;
+  padding: 0 5px;
+  font-size: 12px;
+}
+
+.signinwithgoogle-btn:hover img{
+  background: #eee;
+}
+
+
+/* Backgrounds */
+
+.bg_blur {
+  backdrop-filter: blur(10px);
+}
+
+
+
+/* texts */
