@@ -3,7 +3,8 @@ import React from 'react'
 const page = () => {
   return (
     <div>
-      I am dashboard
+      <h1>WORKOUT</h1>
+      
     </div>
   )
 }

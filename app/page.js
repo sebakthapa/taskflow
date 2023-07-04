@@ -11,7 +11,7 @@ export default function Home() {
       <Link href="/auth/signup" > SIGNUP</Link>
       <Link href="/auth/signin" > signin</Link>
       <Link href="/auth/verify_email" > verify email</Link>
-      <Link href="/auth/dashboard" >dashboard </Link>
+      <Link href="/dashboard" >dashboard </Link>
 
 
 

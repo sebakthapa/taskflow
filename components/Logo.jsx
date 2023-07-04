@@ -7,7 +7,7 @@ const Logo = ({ hideName }) => {
     return (
         <div>
             <Link href="/">
-                <div className="image flex justify-center items-center brightness-">
+                <div className="image flex  items-center brightness-">
                     <Image className="" alt="Taskflow logo" src="/logo.png" width={80} height={100} />
                     {
                         hideName || (

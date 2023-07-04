@@ -66,6 +66,14 @@ body.darkmode-activated{
 }
 
 
+
+.sidebarItem svg{
+  @apply h-7 w-7;
+
+}
+
+
+
 /* floating input label */
 
 .input-field-container {
