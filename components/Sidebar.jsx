@@ -13,7 +13,7 @@ const Sidebar = () => {
     const pathname = usePathname();
     const path = pathname.slice(1);
     return (
-        <div className='w-fit bg-[#6200ee] text-gray-100 text-lg font-semibold h-screen p-10'>
+        <div className='w-fit min-w-[301.5px] bg-indigo-500 text-gray-100 text-lg font-semibold h-screen p-10'>
             <div className="logo invert brightness-0 mb-10">
                 <Logo />
                 <div className="tagline ">

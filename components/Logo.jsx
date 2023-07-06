@@ -12,7 +12,7 @@ const Logo = ({ hideName }) => {
                     {
                         hideName || (
 
-                            <h1 className="font-bold  text-[#6200ee] text-3xl cursor-none pointer-events-none">Taskflow</h1>
+                            <h1 className="font-bold  text-indigo-500 text-3xl cursor-none pointer-events-none">Taskflow</h1>
                         )
 
                     }

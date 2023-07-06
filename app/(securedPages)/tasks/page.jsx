@@ -1,26 +1,21 @@
-import { getDate, getDateth, getDayName, getMonthName } from '@/lib/date'
-import React from 'react'
-import { BsPlus } from 'react-icons/bs'
+import DailyTasksModal from '@/components/DailyTasksModal'
+import TaskListsModal from '@/components/TaskListsModal'
 
-const page = () => {
+const Tasks = () => {
+
+
   return (
-    <div>
-      <h1>TASKS</h1>
-      <div className="title">
-        <h2>Today's Tasks</h2>
-        <p>{`${getDayName()}, ${getDateth()} ${getMonthName()} `}</p>
+    <div className=''>
+      <h1 className='font-bold text-3xl ml-10 mt-10'>TASKS</h1>
+      <div className="taskModalContainer flex">
+        {/* <DailyTasksModal /> */}
+        <TaskListsModal duration="daily" />
+        <TaskListsModal duration="monthly" />
       </div>
-      <div className="add-task text-">
-        <div className="icon">
-          <BsPlus />
-        </div>
-        <p className="text">
-          New Task
-        </p>
-      </div>
-      
+
+
     </div>
   )
 }
 
-export default page
+export default Tasks

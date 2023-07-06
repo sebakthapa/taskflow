@@ -6,29 +6,19 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-
- 
-
-
 }
+
+/*
+ primary:indigo
+ secondary: cyan
+
+*/
 
  @media (prefers-color-scheme: dark) {
  /* :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
-
-    --palatte-900: #101034;
-  --palatte-800: #1b1f4a;
-  --palatte-700: #222756;
-  --palatte-600: #292f61;
-  --palatte-500:  #2e3668;
-  --palatte-400: #4a517b;
-  --palatte-300: #676d90;
-  --palatte-200: #9095af;
-  --palatte-100: #bbbed0;
-  --palatte-500: #e4e5eb;
-  }
   */
 
   
@@ -47,18 +37,6 @@ body {
   min-height: 500vh;
   /* background: #111; */
 
-  
-
-  --palatte-900: #0000d6;
-  --palatte-800: #1c00db;
-  --palatte-700: #3d00e0;
-  --palatte-600: #5300e8;
-  --palatte-500: #6002ee;
-  --palatte-400: #7e3ff2;
-  --palatte-300: #9965f4;
-  --palatte-200: #b794f6;
-  --palatte-100: #d4bff9;
-  --palatte-500: #efe5fd;
 }
 
 body.darkmode-activated{

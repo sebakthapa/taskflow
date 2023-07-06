@@ -6,6 +6,7 @@ import { auth } from '@/lib/firebase'
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { DailyTaskProvider, MonthlyTasksProvider } from "@/context/taskContext"
 
 const layout = ({ children }) => {
   const [user, loading, error] = useAuthState(auth);
@@ -16,21 +17,25 @@ const layout = ({ children }) => {
     console.log("loading>", loading)
 
     if (user && !loading) {
-        user.emailVerified ? router.push("/dashboard") : router.push("/auth/verify_email")
+      user.emailVerified || router.push("/auth/verify_email")
     }
     if (!user && !loading) {
-        router.push("/auth/signup")
+      router.push("/auth/signup")
     }
-},[user, loading])
+  }, [user, loading])
 
 
   return (
-    <div className='flex'>
+    <div className='flex w-full '>
       {/* <h2>HEHEHEHEHEHEHHE</h2> */}
       {/* <Nav /> */}
       <Sidebar />
-      <div>
-        {children}
+      <div className='w-full '>
+        <DailyTaskProvider>
+          <MonthlyTasksProvider>
+            {children}
+          </MonthlyTasksProvider>
+        </DailyTaskProvider>
 
       </div>
     </div>

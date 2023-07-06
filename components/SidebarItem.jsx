@@ -6,7 +6,7 @@ const SidebarItem = ({ icon, text, path }) => {
     return (
         <div className={`sidebarItem cursor-pointeR ${isActive ? "pointer-events-none" : "opacity-90"}`}>
         <Link href={`/${text.toLowerCase()}`} >
-            <div className={`flex justify-start items-center p-3  gap-2 mb-2 `} >
+            <div className={`flex justify-start items-center p-3  gap-3 mb-2 `} >
                 {isActive && (
                     <div className="w-[5px] h-12 bg-gray-100 color-gray-100 rounded-r mr-1">
                         
