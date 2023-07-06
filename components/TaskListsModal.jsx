@@ -10,6 +10,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { BsPlus } from 'react-icons/bs'
 import TasksList from './TasksList'
+import AddTask from './AddTask'
 
 
 const TaskListsModal = ({ duration }) => {
@@ -17,10 +18,10 @@ const TaskListsModal = ({ duration }) => {
     const [user, loading, error] = useAuthState(auth);
 
     // add task data
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [start, setStart] = useState("");
-    const [end, setEnd] = useState("");
+    // const [title, setTitle] = useState("");
+    // const [description, setDescription] = useState("");
+    // const [start, setStart] = useState("");
+    // const [end, setEnd] = useState("");
 
     const { dailyTasks, setDailyTasks } = useContext(DailyTasksContext);
     const { monthlyTasks, setMonthlyTasks } = useContext(MonthlyTasksContext);
@@ -30,51 +31,51 @@ const TaskListsModal = ({ duration }) => {
 
     const [showAddTaskForm, setShowAddTaskForm] = useState(false)
 
-    const getTimestamp = (time) => {
-        return time ? Timestamp.fromDate(new Date(moment(time, "hh mm").format("lll"))) : null
-    }
+    // const getTimestamp = (time) => {
+    //     return time ? Timestamp.fromDate(new Date(moment(time, "hh mm").format("lll"))) : null
+    // }
 
 
-    const handleTaskAdd = async (e) => {
-        e.preventDefault();
-        if (!title) {
-            alert("Title is required Field")
-        } else {
-            const startTime = start ? getTimestamp(start) : null;
-            const endTime = end ? getTimestamp(end) : null;
+    // const handleTaskAdd = async (e) => {
+    //     e.preventDefault();
+    //     if (!title) {
+    //         alert("Title is required Field")
+    //     } else {
+    //         const startTime = start ? getTimestamp(start) : null;
+    //         const endTime = end ? getTimestamp(end) : null;
 
-            const data = {
-                startTime,
-                endTime,
-                title,
-                description: description ? description : null,
-                status: "incomplete",
-                uid: user.uid,
-                createdAt: getTimestamp(new Date())
-            }
+    //         const data = {
+    //             startTime,
+    //             endTime,
+    //             title,
+    //             description: description ? description : null,
+    //             status: "incomplete",
+    //             uid: user.uid,
+    //             createdAt: getTimestamp(new Date())
+    //         }
 
-            try {
-                const docRef = await addDoc(collection(db, collectionName), data);
-                // console.log({ ...docRef.data(), id: doc.id })
+    //         try {
+    //             const docRef = await addDoc(collection(db, collectionName), data);
+    //             // console.log({ ...docRef.data(), id: doc.id })
 
-                console.log("data added successfully")
-                setShowAddTaskForm(false)
-                // console.log(await getDoc())
-            } catch (err) {
-                console.log(err)
-            }
+    //             console.log("data added successfully")
+    //             setShowAddTaskForm(false)
+    //             // console.log(await getDoc())
+    //         } catch (err) {
+    //             console.log(err)
+    //         }
 
-            // console.log(Timestamp.fromDate(`${get}`))
-            // console.log(new Date(moment(start, "hh mm").format("lll")))
+    //         // console.log(Timestamp.fromDate(`${get}`))
+    //         // console.log(new Date(moment(start, "hh mm").format("lll")))
 
-            // console.log("timestamp date", getTimestamp(new Date()))
-            // console.log(getTimestamp())
-            // console.log(getTimestamp(new Date()))
-            // console.log(Date.now())
-            // console.log(tasks);
-        }
+    //         // console.log("timestamp date", getTimestamp(new Date()))
+    //         // console.log(getTimestamp())
+    //         // console.log(getTimestamp(new Date()))
+    //         // console.log(Date.now())
+    //         // console.log(tasks);
+    //     }
 
-    }
+    // }
 
 
     let setTasks, collectionName;
@@ -106,9 +107,10 @@ const TaskListsModal = ({ duration }) => {
             onSnapshot(q, (querySnapshot) => {
                 const fetchedTasks = [];
                 querySnapshot.forEach((doc) => {
-                    fetchedTasks.push(doc.data());
+                    fetchedTasks.push({...doc.data(), id:doc.id });
                 });
                 setTasks(fetchedTasks);
+                console.log(fetchedTasks[1])
             });
         }
     }, [user])
@@ -136,38 +138,7 @@ const TaskListsModal = ({ duration }) => {
             <div className="tasklists pt-5">
                 {
                     showAddTaskForm && (
-                        <div className="addtask mb-5">
-                            <div className='taskitem bg-zinc-100 px-5 rounded-2xl'>
-                                <div className="top flex items-center justify-between pt-5 pb-3 ">
-                                    <div className="texts ">
-                                        <input value={title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder='Title*' required className="title font-semibold text-xl text-gray-700 py-2 px-3  border-solid border-b-2 border-gray-300 bg-transparent outline-none capitalize w-full focus:border-indigo-400" />
-                                        <textarea rows={1} value={description} onChange={(e) => setDescription(e.target.value)} type="text" placeholder='Description' className="description h-fit text-gray-400 mt-1 py-2 px-3  border-solid border-b-2 border-gray-300 bg-transparent outline-none w-full mt-5 focus:border-indigo-400" />
-                                    </div>
-
-                                </div>
-                                <div className="bottom flex items-center justify-between py-5">
-
-                                    <div className="time flex gap-2 text-zinc-400 font-light">
-                                        <div>
-                                            <input value={start} onChange={(e) => setStart(e.target.value)} type="time" className="start px-3 py-2 border-solid border-b-2 border-gray-300 bg-transparent outline-none capitalize w-full " />
-                                            <p className="start text-sm mt-2">Start Time</p>
-                                        </div>
-                                        <p className="distinguisher">-</p>
-                                        <div>
-                                            <input value={end} onChange={(e) => setEnd(e.target.value)} type="time" placeholder='End-time' className="end px-3 py-2 border-solid border-b-2 border-gray-300 bg-transparent outline-none capitalize w-full " />
-                                            <p className="end text-sm mt-2">End Time</p>
-                                        </div>
-                                    </div>
-
-
-                                    <div className="actions flex gap-3">
-                                        <button className='bg-green-500 hover:bg-green-400 transition  active:scale-90 rounded py-2 px-5 font-medium' onClick={handleTaskAdd}>Add</button>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                        <AddTask type="add" uid={user?.uid} collectionName={collectionName} setShowAddTaskForm={setShowAddTaskForm} />
                     )
                 }
                 {
@@ -179,7 +150,7 @@ const TaskListsModal = ({ duration }) => {
                                 tasks.map(({ title, description, startTime, endTime, id, status }, idx) => {
                                     // console.log("startTime>", startTime.toDate().toLocaleDateString())
                                     // console.log(new Date().toLocaleDateString() === startTime.toDate().toLocaleDateString() )
-                                    return <TaskItem key={idx} id={id} title={title} description={description} status={status} start={startTime?.toDate().toLocaleTimeString()} end={endTime?.toDate().toLocaleTimeString()} />
+                                    return <TaskItem setShowTaskAddForm={setShowAddTaskForm} key={idx} id={id} title={title} description={description} status={status} start={startTime?.toDate().toLocaleTimeString()} end={endTime?.toDate().toLocaleTimeString()} collectionName={collectionName} />
                                 })
                             }
                         </>
