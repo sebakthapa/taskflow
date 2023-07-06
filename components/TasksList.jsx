@@ -12,7 +12,7 @@ const TasksList = ({ tasks, showAddTaskForm, setShowAddTaskForm, collectionName,
     const [user, loading, error] = useAuthState(auth)
     
 
-    console.log(collectionName)
+    console.log("tasks>", tasks)
     //
     const { dailyTasks, setDailyTasks } = useContext(DailyTasksContext);
     const { monthlyTasks, setMonthlyTasks } = useContext(MonthlyTasksContext);
@@ -67,18 +67,17 @@ const TasksList = ({ tasks, showAddTaskForm, setShowAddTaskForm, collectionName,
         }
 
     }
-    useEffect(() => {
-        // const q = query(collection(db, collectionName), orderBy('createdAt', 'asc'))
-        // onSnapshot(q, (querySnapshot) => {
-        //   setTasks(querySnapshot.docs.map(doc => ({
-        //     id: doc.id,
-        //     data: doc.data()
-        //   })))
-        // })
-      },[])
+  
 
-    //showing add task form
-    // const [showAddTaskForm, setShowAddTaskForm] = useState(false);
+    // useEffect(() => {
+    //     console.log("I ran");
+    //     // console.log("collectionname", collectionName);
+    //     const q = query(collection(db, collectionName), orderBy('created', 'desc'), where("uid", "==", user?.uid))
+    //     onSnapshot(q, (querySnapshot) => {
+    //         setTasks([{sebak:1}])
+    //     })
+    // }, [])
+
 
     return (
         <div className="tasklists pt-5 ">
