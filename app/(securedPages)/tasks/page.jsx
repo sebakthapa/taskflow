@@ -1,4 +1,3 @@
-import DailyTasksModal from '@/components/DailyTasksModal'
 import TaskListsModal from '@/components/TaskListsModal'
 
 const Tasks = () => {
@@ -8,7 +7,6 @@ const Tasks = () => {
     <div className=''>
       <h1 className='font-bold text-3xl ml-10 mt-10'>TASKS</h1>
       <div className="taskModalContainer flex">
-        {/* <DailyTasksModal /> */}
         <TaskListsModal duration="daily" />
         <TaskListsModal duration="monthly" />
       </div>
