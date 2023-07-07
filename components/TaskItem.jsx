@@ -81,7 +81,7 @@ const TaskItem = ({ title, description, start, end, status, id, collectionName, 
                                 }
                             </div>
                         </div>
-                        <div className="bottom flex items-center justify-between py-5">
+                        <div className="bottom flex items-center justify-between pb-3 pt-2">
                             <div className="time flex gap-2 text-zinc-400 font-light">
                                 <p className="start">{start}</p>
                                 <p className="distinguisher">-</p>

@@ -4,7 +4,7 @@ import TaskItem from '@/components/TaskItem'
 import { DailyTasksContext, MonthlyTasksContext } from '@/context/taskContext'
 import { getDate, getDateth, getDayName, getFullDateFromStr, getFullDateStr, getMonth, getMonthName, getTimeFromStr, getYear } from '@/lib/date'
 import { auth, db } from '@/lib/firebase'
-import {  addDoc, collection, doc, getDocs, onSnapshot, orderBy, query, setDoc, where } from 'firebase/firestore'
+import { addDoc, collection, doc, getDocs, onSnapshot, orderBy, query, setDoc, where } from 'firebase/firestore'
 import moment from 'moment/moment'
 import { useContext, useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -22,8 +22,8 @@ const TaskListsModal = ({ duration }) => {
 
 
     //managing variables for different durations
-    let setTasks, collectionName;
-    const [tasks, setDataTasks] = useState(null)
+    let setTasks, collectionName, snapQuery;
+    const [tasks, setDataTasks] = useState(null);
 
 
     //managing tabs
@@ -38,13 +38,16 @@ const TaskListsModal = ({ duration }) => {
     const [showAddTaskForm, setShowAddTaskForm] = useState(false)
 
 
+    
+
     if (duration == "daily") {
         setTasks = setDailyTasks;
-        collectionName = "daily_tasks"
+        collectionName = "daily_tasks";
     } else {
         setTasks = setMonthlyTasks;
         collectionName = "monthly_tasks"
     }
+
 
 
     useEffect(() => {
@@ -67,10 +70,47 @@ const TaskListsModal = ({ duration }) => {
     // ref.where('start','>=',startOfToday).where('start', '<=', endOfToday)
     // console.log("start of today >>>>>>>>>>>>", startOfToday);
 
+   
+
+
+    const handleTaskFilter = async (tab, data) => {
+        const newTaskArr = [];
+        const array = data ? data : tasks;
+        await array?.map((task) => {
+            if (tab == "completed") {
+                if (task.status == "completed") {
+                    newTaskArr.push(task)
+                }
+            } else if (tab == "pending") {
+                if (task.status == "pending") {
+                    newTaskArr.push(task)
+                }
+            } else if (tab == "all") {
+                newTaskArr.push(task)
+            } else {
+                console.error("handleFilterTask error: line 91")
+            }
+        });
+        setFilteredTasks(newTaskArr);
+    }
+
+
+    useEffect(() => {
+        handleTaskFilter(selectedTab, tasks)
+    },[selectedTab, tasks])
+
+
+
 
     useEffect(() => {
         if (user?.uid) {
-            const q = query(collection(db, collectionName), where("uid", "==", user?.uid), orderBy("status", "desc"), orderBy("startTime", "asc"), orderBy("endTime", "asc"), orderBy("createdAt", "desc"));
+            if (duration == "daily") {
+                snapQuery = query(collection(db, collectionName), where("uid", "==", user?.uid), where("createdAt", "==", getFullDateStr()), orderBy("status", "desc"), orderBy("startTime", "asc"), orderBy("endTime", "asc"),);
+            } else {
+                snapQuery = query(collection(db, collectionName), where("uid", "==", user?.uid), orderBy("status", "desc"), where("createdAt", "==", `${getYear()}${getMonth()}`), orderBy("startTime", "asc"), orderBy("endTime", "asc"), orderBy("createdAt", "desc"));
+            }
+
+            const q = snapQuery;
             onSnapshot(q, (querySnapshot) => {
                 setPendingCount(0)
                 setCompletedCount(0)
@@ -91,30 +131,11 @@ const TaskListsModal = ({ duration }) => {
                 });
                 setTasks(fetchedTasks);
 
-
             });
         }
     }, [user])
 
-    const handleTaskFilter = (tab) => {
-        const newTaskArr = [];
-        tasks.map((task) => {
-            if (tab === "completed") {
-                if (task.status === "completed") {
-                    newTaskArr.push(task)
-                }
-            } else if (tab === "pending") {
-                if (task.status === "pending") {
-                    newTaskArr.push(task)
-                }
-            } else if (tab === "all") {
-                newTaskArr.push(task)
-            }
-        });
-        // console.log(newTaskArr)
-        setFilteredTasks(newTaskArr);
-        console.log(newTaskArr)
-    }
+   
 
     const formatDateToDisplay = (time) => {
         if (duration == "daily") {
@@ -123,7 +144,7 @@ const TaskListsModal = ({ duration }) => {
             return time != `${getYear()}${getMonth()}32000000` ? moment(getFullDateFromStr(time), "YYYYMMDD").format("Do MMMM") : "";
 
         }
-        
+
     }
 
 
@@ -133,7 +154,14 @@ const TaskListsModal = ({ duration }) => {
             <div className="header flex justify-between mt-3">
                 <div className="title">
                     <h2 className='title text-2xl font-semibold capitalize'>{duration} Tasks</h2>
-                    <p className='text-zinc-600'>{`${getDayName()}, ${getDateth()} ${getMonthName()} `}</p>
+                    <p className='text-zinc-600'>
+                        {
+                            duration === "daily" ? (
+                        `${getDayName()}, ${getDateth()} ${getMonthName()} `
+                    ) : (
+                        `${getMonthName()}, ${getYear()} `    
+                    )
+                    }</p>
                 </div>
                 <button className={`add-task flex items-center gap-1 font-medium hover:-translate-y-1 transition  p-2 pr-4 cursor-pointer rounded-xl active:scale-90 ${showAddTaskForm ? "bg-red-200 text-red-700" : "bg-indigo-200 text-blue-700"}`} onClick={() => setShowAddTaskForm((prev) => !prev)}>
                     <BsPlus className={`h-7 w-7 ${showAddTaskForm && "rotate-45"}`} />
@@ -141,9 +169,9 @@ const TaskListsModal = ({ duration }) => {
                 </button>
             </div>
             <div className="nav flex justify-between items-center py-5 px-5 mt-4 text-gray-500">
-                <p onClick={async () => { await setSelectedTab("all"); handleTaskFilter("all") }} className={`cursor-pointer border-r-[2px] border-gray-400  border-solid pr-10 flex items-center ${selectedTab == "all" && "font-medium text-indigo-500 pointer-events-none"}`}>All <span className={`text-xs ml-1 rounded-xl bg-gray-300 px-2 py-0.5 ${selectedTab == "all" && "font-medium text-gray-50 bg-indigo-500"}`}>{allCount}</span></p>
-                <p onClick={async () => { await setSelectedTab("pending"); handleTaskFilter("pending") }} className={`cursor-pointer pr-5 flex items-center ${selectedTab == "pending" && "font-medium text-indigo-500 pointer-events-none"}`}>Pending <span className={`text-xs ml-1 rounded-xl bg-gray-300 px-2 py-0.5 ${selectedTab == "pending" && "font-medium text-gray-50 bg-indigo-500"}`}>{pendingCount}</span></p>
-                <p onClick={async () => { await setSelectedTab("completed"); handleTaskFilter("completed") }} className={`cursor-pointer pr-5 flex items-center ${selectedTab == "completed" && "font-medium text-indigo-500 pointer-events-none"}`}>Completed <span className={`text-xs ml-1 rounded-xl bg-gray-300 px-2 py-0.5 ${selectedTab == "completed" && "font-medium text-gray-50 bg-indigo-500"}`}>{completedCount}</span></p>
+                <p onClick={ () => {  setSelectedTab("all") }} className={`cursor-pointer border-r-[2px] border-gray-400  border-solid pr-10 flex items-center ${selectedTab == "all" && "font-medium text-indigo-500 pointer-events-none"}`}>All <span className={`text-xs ml-1 rounded-xl bg-gray-300 px-2 py-0.5 ${selectedTab == "all" && "font-medium text-gray-50 bg-indigo-500"}`}>{allCount}</span></p>
+                <p onClick={ () => {  setSelectedTab("pending") }} className={`cursor-pointer pr-5 flex items-center ${selectedTab == "pending" && "font-medium text-indigo-500 pointer-events-none"}`}>Pending <span className={`text-xs ml-1 rounded-xl bg-gray-300 px-2 py-0.5 ${selectedTab == "pending" && "font-medium text-gray-50 bg-indigo-500"}`}>{pendingCount}</span></p>
+                <p onClick={ () => {  setSelectedTab("completed") }} className={`cursor-pointer pr-5 flex items-center ${selectedTab == "completed" && "font-medium text-indigo-500 pointer-events-none"}`}>Completed <span className={`text-xs ml-1 rounded-xl bg-gray-300 px-2 py-0.5 ${selectedTab == "completed" && "font-medium text-gray-50 bg-indigo-500"}`}>{completedCount}</span></p>
 
 
             </div>

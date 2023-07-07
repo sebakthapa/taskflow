@@ -28,15 +28,17 @@ const AddTask = ({ type, tid, collectionName, setShowAddTaskForm, handleEdit, se
             alert("Title is required Field")
         } else {
             console.log(start)
-            let startTime, endTime;
+            let startTime, endTime, createdAt;
 
             if (collectionName === "daily_tasks") {
                 startTime = start ? `${getFullDateStr()}${start.replace(":", "")}00` : `${getFullDateStr()}235900`;
                 endTime = end ? `${getFullDateStr()}${end.replace(":", "")}00` : `${getFullDateStr()}235900`;
-
+                createdAt=`${getFullDateStr()}`;
+                
             } else {
                 startTime = start ? `${start.replaceAll("-", "")}000000` : `${getYear()}${getMonth()}32000000`;
                 endTime = end ? `${end.replaceAll("-", "")}000000` : `${getYear()}${getMonth()}32000000`;
+                createdAt=`${getYear()}${getMonth()}`;
 
             }
 
@@ -47,7 +49,7 @@ const AddTask = ({ type, tid, collectionName, setShowAddTaskForm, handleEdit, se
                 description: description ? description : null,
                 status: "pending",
                 uid: user.uid,
-                createdAt: `${getFullDateStr()}${getHour()}${getMinute()}`,
+                createdAt
             }
 
             try {
