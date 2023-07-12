@@ -2,6 +2,7 @@
 
 import { auth } from "@/lib/firebase";
 import { logout, sendEmailVerificationLink } from "@/lib/firebaseAuth";
+import Head from "next/head";
 import { useRouter } from "next/navigation"
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -12,20 +13,20 @@ const VerifyEmail = () => {
 
 
     const handleResendLink = async () => {
-        
-            await sendEmailVerificationLink()
-       
+
+        await sendEmailVerificationLink()
+
     }
 
-   
+
 
 
 
     return (
         <div>
             <Head>
-                    <title>Email Vefification - Taskflow</title>
-                </Head>
+                <title>Email Vefification - Taskflow</title>
+            </Head>
             <div className="flex flex-col justify-center items-center mt-5 p-10">
                 <div className="bg-gray-100 width p-10 rounded">
                     <h1 className="font-bold text-green-700 text-3xl mb-10">Sign Up Success! 🎉</h1>
