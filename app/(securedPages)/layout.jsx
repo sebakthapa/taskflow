@@ -3,14 +3,20 @@
 import Nav from '@/components/Nav'
 import Sidebar from '@/components/Sidebar'
 import { auth } from '@/lib/firebase'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { DailyTaskProvider, MonthlyTasksProvider } from "@/context/taskContext"
+import { PersonalFinanceContextProvider, TeamFinanceContext, TeamFinanceContextProvider } from '@/context/financeContext'
+import BoxLoader from "@/components/BoxLoader"
 
 const layout = ({ children }) => {
   const [user, loading, error] = useAuthState(auth);
+
   const router = useRouter();
+
+  const pathName = usePathname();
+  const pageName = pathName.slice(1, pathName.length);
 
   useEffect(() => {
     console.log("user>", user)
@@ -30,14 +36,24 @@ const layout = ({ children }) => {
       {/* <h2>HEHEHEHEHEHEHHE</h2> */}
       {/* <Nav /> */}
       <Sidebar />
+                {!user ? <BoxLoader /> : (
       <div className='w-full '>
         <DailyTaskProvider>
           <MonthlyTasksProvider>
-            {children}
+            <TeamFinanceContextProvider>
+              <PersonalFinanceContextProvider>
+                  <>
+                    <h1 className="text-3xl p-5 font-bold uppercase">my {pageName}</h1>
+                    {children}
+
+                  </>
+              </PersonalFinanceContextProvider>
+            </TeamFinanceContextProvider>
           </MonthlyTasksProvider>
         </DailyTaskProvider>
 
       </div>
+                )}
     </div>
   )
 }
