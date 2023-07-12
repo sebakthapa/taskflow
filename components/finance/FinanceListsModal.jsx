@@ -1,6 +1,6 @@
 "use client"
 
-import TaskItem from './FinanceItem'
+import FinanceItem from './FinanceItem'
 import { getDate, getDateth, getDayName, getFullDateFromStr, getFullDateStr, getMonth, getMonthName, getTimeFromStr, getYear } from '@/lib/date'
 import { auth, db } from '@/lib/firebase'
 import { addDoc, collection, doc, getDocs, onSnapshot, orderBy, query, setDoc, where, writeBatch } from 'firebase/firestore'
