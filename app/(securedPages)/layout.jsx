@@ -40,7 +40,7 @@ const Layout = ({ children }) => {
       {/* <h2>HEHEHEHEHEHEHHE</h2> */}
       {/* <Nav /> */}
       <Sidebar />
-                {!user ? <BoxLoader /> : (
+                {loading ? <BoxLoader /> : (
       <div className='w-full '>
         <DailyTaskProvider>
           <MonthlyTasksProvider>
