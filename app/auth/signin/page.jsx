@@ -13,8 +13,8 @@ import Head from "next/head";
 function Signin() {
     const router = useRouter();
 
-    const [email, setEmail] = useState("thapasebak059@gmail.com");
-    const [password, setPassword] = useState("password@123");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const { handleSubmit, register, formState: { errors }, } = useForm();
     const [user, loading, error] = useAuthState(auth)

@@ -13,11 +13,11 @@ import Head from "next/head";
 function Signup() {
     const router = useRouter();
 
-    const [fname, setFname] = useState("seb");
-    const [lname, setLname] = useState("thapa");
-    const [email, setEmail] = useState("thapasebak059@gmail.com");
-    const [password, setPassword] = useState("password@123");
-    const [cPassword, setCPassword] = useState("password@123");
+    const [fname, setFname] = useState("");
+    const [lname, setLname] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [cPassword, setCPassword] = useState("");
 
     const { handleSubmit, register, formState: { errors }, } = useForm();
     const [user, loading, error] = useAuthState(auth)
