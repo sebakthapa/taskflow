@@ -1,8 +1,10 @@
 import BoxLoader from "@/components/BoxLoader"
+import Head from "next/head"
 
 const page = () => {
   return (
     <div className="p-10">
+      
       <div className="header">
         <h1 className="font-bold text-xl">This page is under development.</h1>
         <h2 className="font-bold text-sm">will be completed soon.</h2>

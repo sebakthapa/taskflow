@@ -8,6 +8,7 @@ import { continueWithGoogle, logout, sendEmailVerificationLink, signup, updatePr
 import { auth } from "@/lib/firebase"
 
 import { useRouter } from "next/navigation";
+import Head from "next/head";
 
 function Signup() {
     const router = useRouter();
@@ -67,6 +68,9 @@ function Signup() {
     if (!user) {
         return (
             <div className="form-container flex  justify-center items-center mt-10  w-screen " >
+                <Head>
+                    <title>Sign Up - Taskflow</title>
+                </Head>
                 <form action="" onSubmit={handleSubmit(handleSignup)} className="flex flex-col gap-5 bg-[rgba(200,200,255,.1)] dark:bg-gray-700 p-10 rounded-lg w-[550px] border-solid border-gray-300 border-2">
                     <h2 className="text-2xl font-bold mb-3"> Sign Up</h2>
                     <div className="name flex" >

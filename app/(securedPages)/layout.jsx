@@ -9,6 +9,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { DailyTaskProvider, MonthlyTasksProvider } from "@/context/taskContext"
 import { PersonalFinanceContextProvider, TeamFinanceContext, TeamFinanceContextProvider } from '@/context/financeContext'
 import BoxLoader from "@/components/BoxLoader"
+import Head from 'next/head'
 
 const Layout = ({ children }) => {
   const [user, loading, error] = useAuthState(auth);
@@ -33,6 +34,9 @@ const Layout = ({ children }) => {
 
   return (
     <div className='flex w-full '>
+      <Head>
+        <title >Taskflow</title>
+      </Head>
       {/* <h2>HEHEHEHEHEHEHHE</h2> */}
       {/* <Nav /> */}
       <Sidebar />

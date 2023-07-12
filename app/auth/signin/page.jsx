@@ -8,6 +8,7 @@ import { continueWithGoogle, logout, sendEmailVerificationLink, signin } from "@
 import { auth } from "@/lib/firebase"
 
 import { useRouter } from "next/navigation";
+import Head from "next/head";
 
 function Signin() {
     const router = useRouter();
@@ -56,6 +57,9 @@ function Signin() {
     if (!user) {
         return (
             <div className="form-container flex  justify-center items-center mt-10  w-screen " >
+                <Head>
+                    <title>Sign In - Taskflow</title>
+                </Head>
                 <form action="" onSubmit={handleSubmit(handleSignin)} className="flex flex-col gap-5 bg-[rgba(230,230,250,.2)] bg_blur p-10 rounded-lg w-[550px] border-solid border-gray-300 border-2">
                     <h2 className="text-2xl font-bold mb-3"> Sign In</h2>
                     <div className="input-field-container flex flex-col ">
