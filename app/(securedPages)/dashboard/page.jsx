@@ -1,6 +1,10 @@
 import BoxLoader from "@/components/BoxLoader"
 
+
+
+
 const page = () => {
+  
   return (
     <div className="p-10">
       <div className="header">
