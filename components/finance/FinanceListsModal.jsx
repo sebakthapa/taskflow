@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { BsPlus } from 'react-icons/bs'
 import AddFinance from './AddFinance'
+import FinanceItem from "./FinanceItem"
 import { PersonalFinanceContext, TeamFinanceContext } from '@/context/financeContext'
 
 
@@ -56,7 +57,7 @@ const TaskListsModal = ({ type }) => {
         }
 
 
-    }, [personalFinance, teamFinance, finance])
+    }, [type,personalFinance, teamFinance, finance])
 
 
     useEffect(() => {

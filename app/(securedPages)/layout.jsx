@@ -10,7 +10,7 @@ import { DailyTaskProvider, MonthlyTasksProvider } from "@/context/taskContext"
 import { PersonalFinanceContextProvider, TeamFinanceContext, TeamFinanceContextProvider } from '@/context/financeContext'
 import BoxLoader from "@/components/BoxLoader"
 
-const layout = ({ children }) => {
+const Layout = ({ children }) => {
   const [user, loading, error] = useAuthState(auth);
 
   const router = useRouter();
@@ -28,7 +28,7 @@ const layout = ({ children }) => {
     if (!user && !loading) {
       router.push("/auth/signup")
     }
-  }, [user, loading])
+  }, [user, loading, router])
 
 
   return (
@@ -58,4 +58,4 @@ const layout = ({ children }) => {
   )
 }
 
-export default layout
+export default Layout

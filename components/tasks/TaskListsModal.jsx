@@ -59,7 +59,7 @@ const TaskListsModal = ({ duration }) => {
 
         selectedTab === "all" && setFilteredTasks(tasks)
 
-    }, [dailyTasks, monthlyTasks, tasks])
+    }, [selectedTab,duration, dailyTasks, monthlyTasks, tasks])
 
 
     let startOfToday = new Date();
@@ -162,7 +162,7 @@ const TaskListsModal = ({ duration }) => {
 
     useEffect(() => {
         handleTaskFilter(selectedTab, tasks)
-    }, [selectedTab, tasks])
+    }, [handleTaskFilter, selectedTab, tasks])
 
 
     useEffect(() => {

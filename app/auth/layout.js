@@ -21,7 +21,7 @@ function Layout({ children }) {
         if (!user && !loading) {
             router.push("/auth/signup")
         }
-    }, [user, loading])
+    }, [user, loading, router])
 
     return (
         <>
