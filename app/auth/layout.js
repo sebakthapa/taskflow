@@ -27,7 +27,7 @@ function Layout({ children }) {
         <>
 
             {
-                user ? <BoxLoader /> : (
+                loading ? <BoxLoader /> : (
                     <>
                         <AuthNav />
                         {children}

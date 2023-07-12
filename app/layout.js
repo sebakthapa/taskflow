@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        {!user ? <BoxLoader /> : (
+        {loading ? <BoxLoader /> : (
           <>
             {children}
 

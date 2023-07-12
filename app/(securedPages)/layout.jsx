@@ -19,8 +19,8 @@ const Layout = ({ children }) => {
   const pageName = pathName.slice(1, pathName.length);
 
   useEffect(() => {
-    console.log("user>", user)
-    console.log("loading>", loading)
+    // console.log("user>", user)
+    // console.log("loading>", loading)
 
     if (user && !loading) {
       user.emailVerified || router.push("/auth/verify_email")
@@ -36,7 +36,7 @@ const Layout = ({ children }) => {
       {/* <h2>HEHEHEHEHEHEHHE</h2> */}
       {/* <Nav /> */}
       <Sidebar />
-                {!user ? <BoxLoader /> : (
+                {loading ? <BoxLoader /> : (
       <div className='w-full '>
         <DailyTaskProvider>
           <MonthlyTasksProvider>
