@@ -3,6 +3,10 @@ import './globals.css'
 import { Inter } from 'next/font/google';
 import Darkmode from "darkmode-js"
 import { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/lib/firebase';
+import BoxLoader from "@/components/BoxLoader"
+
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -35,6 +39,7 @@ const addDarkmodeWidget = () => {
 
 export default function RootLayout({ children }) {
   // const [preferredScheme, setPreferredScheme] = useState("");
+  const [user, loading, error] = useAuthState(auth)
 
   const handleDarkMode = () => {
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -57,11 +62,20 @@ export default function RootLayout({ children }) {
   useEffect(() => {
     // addDarkmodeWidget();
     // handleDarkMode();
+
+    // if(!user){}
   }, [])
 
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {!user ? <BoxLoader /> : (
+          <>
+            {children}
+
+          </>
+        )}
+      </body>
     </html>
   )
 }

@@ -4,16 +4,6 @@ import { createContext, useEffect, useState } from "react";
 
 export const DailyTasksContext = createContext("");
 
-const fetchTasks = async (collectionName, setTasks) => {
-    await getDocs(collection(db, collectionName))
-        .then((querySnapshot) => {
-            const newData = querySnapshot.docs
-                .map((doc) => ({ ...doc.data(), id: doc.id }));
-            setTasks(newData);
-            // console.log(todos, newData);
-        })
-}
-
 export const DailyTaskProvider = ({ children }) => {
     const [dailyTasks, setDailyTasks] = useState(null);
 

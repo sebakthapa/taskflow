@@ -1,6 +1,6 @@
 "use client"
 
-import TaskItem from '@/components/TaskItem'
+import TaskItem from './TaskItem'
 import { DailyTasksContext, MonthlyTasksContext } from '@/context/taskContext'
 import { getDate, getDateth, getDayName, getFullDateFromStr, getFullDateStr, getMonth, getMonthName, getTimeFromStr, getYear } from '@/lib/date'
 import { auth, db } from '@/lib/firebase'

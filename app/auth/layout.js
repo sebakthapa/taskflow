@@ -5,6 +5,7 @@ import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import BoxLoader from "@/components/BoxLoader"
 
 function Layout({ children }) {
     const [user, loading, error] = useAuthState(auth);
@@ -14,18 +15,25 @@ function Layout({ children }) {
         console.log("user>", user)
         console.log("loading>", loading)
 
-        if (user && !loading) {
+        if (user) {
             user.emailVerified ? router.push("/dashboard") : router.push("/auth/verify_email")
         }
         if (!user && !loading) {
             router.push("/auth/signup")
         }
-    },[user, loading])
+    }, [user, loading])
 
     return (
         <>
-            <AuthNav />
-            {children}
+
+            {
+                user ? <BoxLoader /> : (
+                    <>
+                        <AuthNav />
+                        {children}
+                    </>
+                )
+            }
         </>
     )
 }
