@@ -18,7 +18,7 @@ const AddFinance = ({ type, tid, collectionName, setShowAddFinanceForm, handleEd
 
     const [itemName, setItemName] = useState(props.itemName ? props.itemName : "");
     const [price, setPrice] = useState(props.price ? props.price : "");
-    const [financeType, setFinanceType] = useState(props.financeType ? props.financeType : "credit");
+    const [financeType, setFinanceType] = useState(props.financeType ? props.financeType : "debit");
 
 
     const handleFinanceAdd = async (e) => {
@@ -26,13 +26,13 @@ const AddFinance = ({ type, tid, collectionName, setShowAddFinanceForm, handleEd
         if (!itemName || !price) {
             alert("Item name and price is required Field")
         } else {
-            
+
 
             const data = {
                 itemName,
                 uid: user.uid,
                 price: price,
-                type:financeType,
+                type: financeType,
                 createdAt: getFullDateStr(),
             }
             console.log(data)
@@ -48,13 +48,23 @@ const AddFinance = ({ type, tid, collectionName, setShowAddFinanceForm, handleEd
             //     console.log(err)
             // }
 
+            addDoc(collection(db, collectionName), data)
+                .then((docRef) => {
+                    setShowAddFinanceForm(false)
+
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+
+
 
         }
 
     }
 
     const handleUpdate = () => {
-        
+
         const updatedData = {
             startTime,
             endTime,
@@ -68,8 +78,8 @@ const AddFinance = ({ type, tid, collectionName, setShowAddFinanceForm, handleEd
                 setShowEditForm(false)
             })
             .catch((err) => {
-            console.log(err)
-        })
+                console.log(err)
+            })
     }
 
 
@@ -85,17 +95,17 @@ const AddFinance = ({ type, tid, collectionName, setShowAddFinanceForm, handleEd
                     </div>
                     <div className="bottom flex items-center justify-between py-5">
                         <input value={price} onChange={(e) => setPrice(e.target.value)} type="number" placeholder='price *' min="0" required className="price font-semibold text-xl text-gray-700 py-2 px-3  border-solid border-b-2 border-gray-300 bg-transparent outline-none capitalize w-1/2 focus:border-indigo-400" />
-                        <select defaultValue={financeType ? financeType : ""} name="" id="financeType" className="py-2 px-4  font-semibold text-gray-400 border-solid border-b-2 border-gray-300 cursor-pointer outline-none bg-gray-100 transition" >
-                            <option value="" id="financeType"  className="bg-gray-300" disabled>Select Type</option>
-                            <option value="credit"  id="financeType" onClick={(e) => setFinanceType("credit")}>Credit</option>
-                            <option value="debit"  id="financeType" onClick={(e) => setFinanceType("debit")}>Debit</option>
+                        <select onChange={(e) => { setFinanceType(e.target.value) }} defaultValue={financeType ? financeType : ""} name="" id="financeType" className={`py-2 px-4  font-semibold text-gray-400 border-solid border-b-2 border-gray-300 cursor-pointer outline-none bg-gray-100 transition ${financeType === "credit" && "text-green-500"} ${financeType === "debit" &&  "text-red-500"}`} >
+                            <option value="" id="financeType" className="bg-gray-300" disabled>Select Type</option>
+                            <option value="credit" id="financeType" className=" font-semibold text-gray-500"  >Credit</option>
+                            <option value="debit" id="financeType" className=" font-semibold text-gray-500"  >Debit</option>
 
-                            
+
                         </select>
                     </div>
                     <div className="actions gap-3 flex pb-4 ">
                         <button type="submit" className='bg-green-500 hover:bg-green-400 transition  active:scale-90 rounded py-1 px-4 font-medium capitalize' onClick={type === "add" ? handleFinanceAdd : handleUpdate}>{type}</button>
-                        <button className='bg-red-500 hover:bg-red-400 transition  active:scale-90 rounded py-2 px-4 font-medium capitalize' onClick={() => setShowAddFinanceForm(false) }>cancel</button>
+                        <button className='bg-red-500 hover:bg-red-400 transition  active:scale-90 rounded py-2 px-4 font-medium capitalize' onClick={() => setShowAddFinanceForm(false)}>cancel</button>
 
                     </div>
 

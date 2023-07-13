@@ -12,24 +12,29 @@ import AddFinance from './AddFinance'
 import { PersonalFinanceContext, TeamFinanceContext } from '@/context/financeContext'
 
 
-const TaskListsModal = ({ type }) => {
+const FinanceListsModal = ({ type }) => {
     type = type.toLowerCase();
 
     const [user, loading, error] = useAuthState(auth);
-    const {personalFinance, setPersonalFinance} = useContext(PersonalFinanceContext)
-    const {teamFinance, setTeamFinance} = useContext(TeamFinanceContext)
+    const { personalFinance, setPersonalFinance } = useContext(PersonalFinanceContext)
+    const { teamFinance, setTeamFinance } = useContext(TeamFinanceContext)
 
 
     //managing variables for different types
     let setFinance, collectionName, snapQuery;
     const [finance, setDataFinance] = useState(null);
 
-    
+
     //managing tabs
     const [selectedTab, setSelectedTab] = useState("monthly");
     const [monthlyCount, setMonthlyCount] = useState(0);
     const [dailyCount, setdailyCount] = useState(0);
     const [filteredFinance, setFilteredFinance] = useState(finance)
+
+    const [allCount, setAllCount] = useState(0);
+    const [CreditCount, setCreditCount] = useState(0);
+    const [debitCount, setDebitCount] = useState(0);
+
 
 
     const [showAddFinanceForm, setShowAddFinanceForm] = useState(false)
@@ -62,27 +67,28 @@ const TaskListsModal = ({ type }) => {
     useEffect(() => {
         if (user?.uid) {
             if (type == "personal") {
-                snapQuery = query(collection(db, collectionName), where("uid", "==", user?.uid), where("createdAt", "==", getFullDateStr()), orderBy("createdAt", "desc"));
+                snapQuery = query(collection(db, collectionName), where("uid", "==", user?.uid), where("createdAt", "==", getFullDateStr()), orderBy("price", "asc"));
             } else {
-                snapQuery = query(collection(db, collectionName), where("uid", "==", user?.uid), where("createdAt", "==", `${getYear()}${getMonth()}`),  orderBy("createdAt", "desc"));
+                snapQuery = query(collection(db, collectionName), where("uid", "==", user?.uid), where("createdAt", "==", `${getYear()}${getMonth()}`), orderBy("createdAt", "desc"));
             }
 
             const q = snapQuery;
             onSnapshot(q, (querySnapshot) => {
-                setPendingCount(0)
-                setCompletedCount(0)
+                setCreditCount(0)
+                setDebitCount(0)
                 setAllCount(0)
 
                 const fetchedTasks = [];
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
+                    console.log({ ...docData, id: doc.id })
                     fetchedTasks.push({ ...docData, id: doc.id });
 
 
                     if (docData.status === "pending") {
-                        setPendingCount((prev) => ++prev)
+                        setCreditCount((prev) => ++prev)
                     } else if (docData.status = "completed") {
-                        setCompletedCount((prev) => ++prev)
+                        setDebitCount((prev) => ++prev)
                     }
                     setAllCount((prev) => ++prev)
                 });
@@ -125,11 +131,11 @@ const TaskListsModal = ({ type }) => {
                     <p className="text  text-xl capitalize">{showAddFinanceForm ? "Cancel add" : "New Item"}</p>
                 </button>
             </div>
-           
+
             <div className="tasklists pt-5 max-h-[450px] overflow-auto pr-3">
                 {
                     showAddFinanceForm && (
-                        <AddFinance  type="add" uid={user?.uid} collectionName={collectionName} setShowAddFinanceForm={setShowAddFinanceForm} />
+                        <AddFinance type="add" uid={user?.uid} collectionName={collectionName} setShowAddFinanceForm={setShowAddFinanceForm} />
                     )
                 }
                 {
@@ -138,13 +144,16 @@ const TaskListsModal = ({ type }) => {
                     finance?.length > 0 ? (
                         <>
                             {
-                                finance.map(({ title, description, startTime, endTime, id, status }, idx) => {
+                                finance.map(({ itemName, id, createdAt, price, type }, idx) => {
                                     return <FinanceItem
                                         setShowFinanceAddForm={setShowAddFinanceForm}
                                         key={idx}
                                         id={id}
-                                        ItemName={itemName}
-                                        collectionName={collectionName} />
+                                        itemName={itemName}
+                                        collectionName={collectionName}
+                                        createdAt={createdAt}
+                                        price={price}
+                                        type={type} />
                                 })
                             }
                         </>
@@ -175,4 +184,4 @@ const TaskListsModal = ({ type }) => {
 
 
 
-export default TaskListsModal
+export default FinanceListsModal
